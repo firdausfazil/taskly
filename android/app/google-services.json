@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "1019434392377",
+    "project_id": "ikoop-e2cdd",
+    "storage_bucket": "ikoop-e2cdd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019434392377:android:1b635b43a032f8894d26e8",
+        "android_client_info": {
+          "package_name": "com.deeptronix.ikoop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019434392377-tpmvto4vhrpa2gagphbjfotv0do87q1g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.deeptronix.ikoop",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1019434392377-tnq146vuk3t0l45j691gghdsv8a642oe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADA8w8uzfgQFn3ItduOjdZO2Uh6KSrFtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019434392377-tnq146vuk3t0l45j691gghdsv8a642oe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1019434392377-7ml5qd9hkgb8jlbn8erermf7tc11mfeg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.deeptronix.ikoop"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019434392377:android:15ae2ca49f78d9384d26e8",
+        "android_client_info": {
+          "package_name": "com.taskly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019434392377-tnq146vuk3t0l45j691gghdsv8a642oe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADA8w8uzfgQFn3ItduOjdZO2Uh6KSrFtw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019434392377-tnq146vuk3t0l45j691gghdsv8a642oe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1019434392377-7ml5qd9hkgb8jlbn8erermf7tc11mfeg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.deeptronix.ikoop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
