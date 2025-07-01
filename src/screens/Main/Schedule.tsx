@@ -24,7 +24,8 @@ import {
   AdjustmentsHorizontalIcon,
   XMarkIcon,
   ChevronLeftIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  XCircleIcon
 } from 'react-native-heroicons/outline';
 
 // Import moment for date handling
@@ -93,7 +94,6 @@ export default function Schedule({navigation}: {navigation: any}) {
 
   const clearSearch = () => {
     setSearchText('');
-    setShowSearch(false);
   };
 
   const renderDateItem = (date: moment.Moment, index: number) => {
@@ -207,7 +207,7 @@ export default function Schedule({navigation}: {navigation: any}) {
       {/* Header */}
       <View className="w-screen pt-6 pb-2 px-5 bg-white shadow-sm" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 60}}>
         <View className="w-full flex-row justify-between items-center">
-          <View className="flex-row items-center gap-2">
+          <View className="flex-row items-center gap-1">
             <Image 
               source={require('../../assets/icons/TabIcon/schedule.png')} 
               className="h-5 w-5" 
@@ -231,6 +231,7 @@ export default function Schedule({navigation}: {navigation: any}) {
             >
               <PlusIcon color="white" size={20} />
             </TouchableOpacity>
+
           </View>
         </View>
         
@@ -263,8 +264,8 @@ export default function Schedule({navigation}: {navigation: any}) {
       
       {/* Search Bar */}
       {showSearch && (
-        <View className="px-5 py-3 bg-white border-b border-gray-100">
-          <View className="w-full py-2 bg-gray-100 rounded-xl px-4 flex-row gap-2 items-center">
+        <View className="px-5 py-3 bg-white border-b border-gray-100 flex-row justify-between items-center">
+          <View className="py-2 bg-gray-100 rounded-xl px-4 flex-row gap-2 items-center w-11/12">
             <MagnifyingGlassIcon color="#6b7280" size={18} />
             <TextInput
               placeholder="Search schedules..."
@@ -281,6 +282,9 @@ export default function Schedule({navigation}: {navigation: any}) {
               </TouchableOpacity>
             )}
           </View>
+          <TouchableOpacity onPress={() => setShowSearch(false)}>
+            <XCircleIcon color="#6b7280" size={24} />
+          </TouchableOpacity>
         </View>
       )}
 

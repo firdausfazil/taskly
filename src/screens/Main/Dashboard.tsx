@@ -33,6 +33,7 @@ const Dashboard = () => {
       <ScrollView 
         className="flex-1"
         showsVerticalScrollIndicator={false}
+        contentContainerClassName='pt-10'
       > 
         {/* Stats Cards */}
         <View className="flex-row mx-4 justify-between mt-6">

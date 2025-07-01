@@ -105,7 +105,7 @@ function MyTabs(): React.JSX.Element {
 
 
       <Tab.Screen 
-        name="TaskTab" 
+        name="Task" 
         component={Task2}
         options={{
           tabBarIcon: ({ focused }) => (

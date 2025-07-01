@@ -64,29 +64,33 @@ const DashboardUser2 = () => {
   return (
     <View className="flex-1 bg-white">
       <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+      
+      {/* Header Section */}
+      <View className="px-6 pt-20 pb-6">
+        <View className="flex-row justify-between items-center mb-1">
+          <View>
+            <Text className="text-3xl font-bold text-gray-800">Hello,</Text>
+            <Text className="text-3xl font-bold text-blue-600">{userName}</Text>
+          </View>
+          <View className="flex-row gap-4">
+            <TouchableOpacity className="bg-gray-100 p-2.5 rounded-full">
+              <MagnifyingGlassIcon size={22} color="#4B5563" />
+            </TouchableOpacity>
+            <TouchableOpacity className="bg-gray-100 p-2.5 rounded-full">
+              <BellIcon size={22} color="#4B5563" />
+              <View className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></View>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <Text className="text-gray-500 mt-1">{formattedDate}</Text>
+      </View>
+
+      
       <ScrollView 
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
-        {/* Header Section */}
-        <View className="px-6 pt-14 pb-6">
-          <View className="flex-row justify-between items-center mb-1">
-            <View>
-              <Text className="text-3xl font-bold text-gray-800">Hello,</Text>
-              <Text className="text-3xl font-bold text-blue-600">{userName}</Text>
-            </View>
-            <View className="flex-row gap-4">
-              <TouchableOpacity className="bg-gray-100 p-2.5 rounded-full">
-                <MagnifyingGlassIcon size={22} color="#4B5563" />
-              </TouchableOpacity>
-              <TouchableOpacity className="bg-gray-100 p-2.5 rounded-full">
-                <BellIcon size={22} color="#4B5563" />
-                <View className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></View>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <Text className="text-gray-500 mt-1">{formattedDate}</Text>
-        </View>
+        
         
         {/* Progress Overview */}
         <View className="px-6 mb-6">
