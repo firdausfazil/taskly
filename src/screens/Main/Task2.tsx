@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, StatusBar, Modal, Pressable, Dimensions, ViewStyle, TextStyle, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, StatusBar, Modal, Pressable, Dimensions, ViewStyle, TextStyle, Image, FlatList, ScrollView } from 'react-native'
 import React, { useLayoutEffect, useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import FullLayout from '../../layout/FullLayout'
 import { MagnifyingGlassIcon, PlusIcon, CalendarDaysIcon, CheckIcon, TrashIcon, XMarkIcon, PencilSquareIcon, ChevronLeftIcon, ChevronRightIcon } from 'react-native-heroicons/outline'
@@ -102,16 +102,16 @@ const SubtaskItem = React.memo(({
 }) => {
   return (
     <TouchableOpacity
-      className="flex-row items-center mb-1"
+      className="flex-row items-center py-2 px-3 mb-1 rounded-lg"
       onPress={(e) => {
         e.stopPropagation();
         onToggle();
       }}
     >
-      <View className={`h-5 w-5 rounded-md ${subtask.completed ? 'bg-blue-500' : 'border-2 border-gray-400'} justify-center items-center`}>
+      <View className={`h-6 w-6 rounded-md ${subtask.completed ? 'bg-blue-500' : 'border-2 border-gray-400'} justify-center items-center`}>
         {subtask.completed && <CheckIcon color="white" size={16} />}
       </View>
-      <Text className={`ml-3 text-sm ${subtask.completed ? 'text-gray-400 line-through' : 'text-gray-700'}`}>
+      <Text className={`ml-3 text-md ${subtask.completed ? 'text-gray-400 line-through' : 'text-gray-700'}`}>
         {subtask.title}
       </Text>
     </TouchableOpacity>
@@ -127,7 +127,7 @@ const SubtasksList = React.memo(({
   onToggle: (index: number) => void;
 }) => {
   return (
-    <View className="space-y-3 bg-gray-50 p-4 rounded-xl">
+    <ScrollView>
       {subtasks.map((subtask, index) => (
         <SubtaskItem
           key={index}
@@ -135,7 +135,7 @@ const SubtasksList = React.memo(({
           onToggle={() => onToggle(index)}
         />
       ))}
-    </View>
+    </ScrollView>
   );
 });
 
@@ -239,6 +239,7 @@ const Task2 = ({ navigation }: NavigationProps) => {
 
   const loadTasks = async (): Promise<void> => {
     try {
+      AsyncStorage.clear();
       const storedTasks = await AsyncStorage.getItem('tasks2')
       let tasksToSet;
       if (storedTasks !== null) {
@@ -553,20 +554,37 @@ const Task2 = ({ navigation }: NavigationProps) => {
                 </Text>
               </View>
             </View>
+
+            {/* Date */}
+            <View className="flex-row items-center mb-2 mt-1">
+              <CalendarDaysIcon color={item.completed ? "#d1d5db" : "#6b7280"} size={14} />
+              <Text className={`ml-1 text-xs ${item.completed ? 'text-gray-300' : 'text-gray-500'}`}>
+                {item.startDate === item.dueDate 
+                  ? formatDate(item.dueDate)
+                  : `${formatDate(item.startDate)} - ${formatDate(item.dueDate)}`}
+              </Text>
+            </View>
+
             
+            {/* Description */}
             {item.description ? (
               <Text 
                 className={`text-sm mt-1 ${item.completed ? 'text-gray-300' : 'text-gray-500'}`}
-                numberOfLines={1}
+                numberOfLines={2}
+                ellipsizeMode="tail"
               >
                 {item.description}
               </Text>
             ) : null}
+
             
-            <View className="flex-row justify-between items-center mt-3">
+            
+            <View className="mt-3">
               {item.subtasks && item.subtasks.length > 0 && (
+                <>
+                <Text className="text-xs font-medium text-gray-500">Subtasks:</Text>
                 <View className="flex-row items-center">
-                  <View className="w-20 h-1.5 rounded-full bg-gray-200">
+                  <View className="flex-1 h-1.5 rounded-full bg-gray-200">
                     <View 
                       className="h-1.5 rounded-full bg-blue-500" 
                       style={{ 
@@ -578,17 +596,10 @@ const Task2 = ({ navigation }: NavigationProps) => {
                     {item.subtasks.filter(st => st.completed).length}/{item.subtasks.length}
                   </Text>
                 </View>
+                </>
               )}
-              
-              <View className="flex-row items-center">
-                <CalendarDaysIcon color={item.completed ? "#d1d5db" : "#6b7280"} size={14} />
-                <Text className={`ml-1 text-xs ${item.completed ? 'text-gray-300' : 'text-gray-500'}`}>
-                  {item.startDate === item.dueDate 
-                    ? formatDate(item.dueDate)
-                    : `${formatDate(item.startDate)} - ${formatDate(item.dueDate)}`}
-                </Text>
-              </View>
             </View>
+
           </View>
         </View>
       </View>
@@ -731,13 +742,14 @@ const Task2 = ({ navigation }: NavigationProps) => {
         onRequestClose={resetAndCloseModal}
       >
         <Pressable 
-          className="flex-1 justify-end bg-black/60" 
+          className="flex-1 justify-end bg-black/70" 
           onPress={resetAndCloseModal}
         >
           <Pressable 
-            className="bg-white rounded-t-3xl p-6 pt-8 shadow-xl" 
+            className="bg-white rounded-t-3xl p-6 pt-6 h-2/3" 
             onPress={e => e.stopPropagation()}
           >
+            <View className="flex-1">
             {taskDetails}
             
             {/* Subtasks */}
@@ -750,39 +762,42 @@ const Task2 = ({ navigation }: NavigationProps) => {
                 />
               </View>
             )}
+            </View>
             
             {/* Action icons */}
-            <View className="flex-row justify-between items-center pt-4 border-t border-gray-100">
-              {/* Delete action */}
-              <TouchableOpacity 
-                className="flex-row items-center p-3"
-                onPress={(e) => {
-                  e.stopPropagation();
-                  handleDeleteTask(taskRef.current.id);
-                }}
-              >
-                <View className="bg-red-100 p-2 rounded-full">
-                  <TrashIcon color="#ef4444" size={20} />
-                </View>
-                <Text className="ml-2 text-sm font-medium text-red-500">Delete</Text>
-              </TouchableOpacity>
-              
-              {/* Edit action */}
-              <TouchableOpacity 
-                className="flex-row items-center p-3"
-                onPress={(e) => {
-                  e.stopPropagation();
-                  handleEditTask();
-                }}
-                disabled={taskRef.current.completed}
-              >
-                <View className={`p-2 rounded-full ${taskRef.current.completed ? 'bg-gray-100' : 'bg-blue-100'}`}>
-                  <PencilSquareIcon color={taskRef.current.completed ? "#9ca3af" : "#3b82f6"} size={20} />
-                </View>
-                <Text className={`ml-2 text-sm font-medium ${taskRef.current.completed ? 'text-gray-400' : 'text-blue-500'}`}>
-                  {taskRef.current.completed ? 'Cannot Edit' : 'Edit Task'}
-                </Text>
-              </TouchableOpacity>
+            <View className='justify-end '>
+              <View className="flex-row justify-between items-center pt-4 border-t border-gray-100">
+                {/* Delete action */}
+                <TouchableOpacity 
+                  className="flex-row items-center p-3"
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    handleDeleteTask(taskRef.current.id);
+                  }}
+                >
+                  <View className="bg-red-100 p-2 rounded-full">
+                    <TrashIcon color="#ef4444" size={20} />
+                  </View>
+                  <Text className="ml-2 text-sm font-medium text-red-500">Delete</Text>
+                </TouchableOpacity>
+                
+                {/* Edit action */}
+                <TouchableOpacity 
+                  className="flex-row items-center p-3"
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    handleEditTask();
+                  }}
+                  disabled={taskRef.current.completed}
+                >
+                  <View className={`p-2 rounded-full ${taskRef.current.completed ? 'bg-gray-100' : 'bg-blue-100'}`}>
+                    <PencilSquareIcon color={taskRef.current.completed ? "#9ca3af" : "#3b82f6"} size={20} />
+                  </View>
+                  <Text className={`ml-2 text-sm font-medium ${taskRef.current.completed ? 'text-gray-400' : 'text-blue-500'}`}>
+                    {taskRef.current.completed ? 'Cannot Edit' : 'Edit Task'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </Pressable>
         </Pressable>
@@ -924,7 +939,7 @@ const Task2 = ({ navigation }: NavigationProps) => {
 
           <View className="flex-row items-center">
             <TouchableOpacity 
-              className={` py-2 px-4 rounded-full ${isCalendarView ? 'bg-blue-500' : ''}`}
+              className={` py-2 px-4 rounded-full ${isCalendarView ? 'bg-blue-500 mr-2' : ''}`}
               onPress={() => setIsCalendarView(!isCalendarView)}
             >
               <Text className={isCalendarView ? 'text-white' : ''}>
@@ -942,7 +957,7 @@ const Task2 = ({ navigation }: NavigationProps) => {
         
         {/* Calendar View */}
         {isCalendarView ? (
-          <View className="flex-1 px-5 pt-2">
+          <View className="flex-1 px-5 ios:mt-2">
             <View className="bg-white rounded-2xl shadow-sm border border-gray-100 flex-1">
               {/* Calendar Header */}
               <View className="px-6 py-4 border-b border-gray-100">
